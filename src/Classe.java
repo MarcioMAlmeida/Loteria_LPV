@@ -6,17 +6,29 @@ public class Classe {
 
     public double loteria(List<Integer> jogo, double premioTotal) {
 
-        List<Integer> jogoValido = validaNumeros(jogo);
-        if (jogoValido == null) return 0.0;
+        List<Integer> jogoVencedor = sorteiaNumeros();
+        
+        List<Integer> jogoValido = validaJogo(jogo);
 
-        int acertos = sorteio(jogo, jogoValido);
-
+        int acertos = confereNumeros(jogoVencedor, jogoValido);
         double premioGanho = calcularPremio(premioTotal, acertos);
 
         return premioGanho;
     }
 
-    private static List<Integer> validaNumeros(List<Integer> jogo) {
+    private static List<Integer> sorteiaNumeros() {
+        List<Integer> jogoVencedor = new ArrayList<>();
+        int s;
+        while (jogoVencedor.size() < 6) {
+            s = new Random().nextInt(59) + 1;
+            if (!jogoVencedor.contains(s)) {
+                jogoVencedor.add(s);
+            }
+        }
+        return jogoVencedor;
+    }
+
+    private static List<Integer> validaJogo(List<Integer> jogo) {
         List<Integer> jogoValido = new ArrayList<>();
         for (Integer n: jogo){
             if (n < 1 || n > 60){
@@ -30,33 +42,13 @@ public class Classe {
         return jogoValido;
     }
 
-    private static int sorteio(List<Integer> jogo, List<Integer> jogoValido) {
+    private static int confereNumeros(List<Integer> jogoVencedor, List<Integer> jogoValido) {
         int acertos = 0;
         if (jogoValido.size() >= 6 && jogoValido.size() <= 15) {
-
-            List<Integer> numerosCertos = sorteiaNumeros();
-            acertos = verificarAcertos(jogo, numerosCertos);
-        }
-        return acertos;
-    }
-
-    private static List<Integer> sorteiaNumeros() {
-        List<Integer> numerosCertos = new ArrayList<>();
-        int s;
-        while (numerosCertos.size() < 6) {
-            s = new Random().nextInt(59) + 1;
-            if (!numerosCertos.contains(s)) {
-                numerosCertos.add(s);
-            }
-        }
-        return numerosCertos;
-    }
-
-    private static int verificarAcertos(List<Integer> jogo, List<Integer> numerosCertos) {
-        int acertos =0;
-        for (Integer i: jogo){
-            if (numerosCertos.contains(i)){
-                acertos++;
+            for (Integer i: jogoValido){
+                if (jogoVencedor.contains(i)){
+                    acertos++;
+                }
             }
         }
         return acertos;
