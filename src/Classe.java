@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Classe {
 
-    public double loteria(List<Integer> jogo, double premioTotal) {
+    public static double loteria(List<Integer> jogo, double premioTotal) {
         int acertos;
         double premioGanho;
         List<Integer> jogoVencedor;
@@ -23,7 +23,7 @@ public class Classe {
         return premioGanho;
     }
 
-    private static List<Integer> sorteiaNumeros() {
+    public static List<Integer> sorteiaNumeros() {
         List<Integer> jogoVencedor = new ArrayList<>();
         int s;
         while (jogoVencedor.size() < 6) {
@@ -37,7 +37,7 @@ public class Classe {
 
     private static List<Integer> validaJogo(List<Integer> jogo) throws Exception {
         List<Integer> jogoValido = new ArrayList<>();
-        if (jogo.size() >= 6 && jogo.size() <= 15) {
+        if (jogo.size() <= 6 && jogo.size() >= 15) {
             throw new Exception("Tamanho do jogo inválido");
         }
         for (Integer n : jogo) {
@@ -52,7 +52,7 @@ public class Classe {
         return jogoValido;
     }
 
-    private static int confereNumeros(List<Integer> jogoVencedor, List<Integer> jogoValido) {
+    public static int confereNumeros(List<Integer> jogoVencedor, List<Integer> jogoValido) {
         int acertos = 0;
         for (Integer i : jogoValido) {
             if (jogoVencedor.contains(i)) {
@@ -62,7 +62,7 @@ public class Classe {
         return acertos;
     }
 
-    private static double calcularPremio(double premioTotal, int acertos) {
+    public static double calcularPremio(double premioTotal, int acertos) {
         if (acertos == 6) {
             return premioTotal;
         } else if (acertos == 5) {
