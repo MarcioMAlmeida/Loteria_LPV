@@ -7,7 +7,7 @@ public class Main {
         List<Integer> jogo = new ArrayList<>();
 
         jogo.add(1);
-        jogo.add(4);
+        jogo.add(2);
         jogo.add(14);
         jogo.add(19);
         jogo.add(26);

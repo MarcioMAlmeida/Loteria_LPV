@@ -35,9 +35,9 @@ public class Classe {
         return jogoVencedor;
     }
 
-    private static List<Integer> validaJogo(List<Integer> jogo) throws Exception {
+    public static List<Integer> validaJogo(List<Integer> jogo) throws Exception {
         List<Integer> jogoValido = new ArrayList<>();
-        if (jogo.size() <= 6 && jogo.size() >= 15) {
+        if (jogo.size() < 6 || jogo.size() > 15) {
             throw new Exception("Tamanho do jogo inválido");
         }
         for (Integer n : jogo) {

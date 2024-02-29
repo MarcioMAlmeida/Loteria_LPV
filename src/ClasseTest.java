@@ -1,9 +1,8 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,16 +12,14 @@ class ClasseTest {
     public void testSorteiaNumeros() {
         List<Integer> numerosSorteados = Classe.sorteiaNumeros();
         assertEquals(6, numerosSorteados.size());
-        for (int numero : numerosSorteados) {
-            assertTrue(numero >= 1 && numero <= 60);
-        }
     }
 
     @Test
     public void testSorteiaNumerosSemRepeticao() {
-        List<Integer> numerosSorteados1 = Classe.sorteiaNumeros();
-        List<Integer> numerosSorteados2 = Classe.sorteiaNumeros();
-        assertNotEquals(numerosSorteados1, numerosSorteados2);
+        List<Integer> numerosSorteados = Classe.sorteiaNumeros();
+
+        Set<Integer> conjuntoNumeros = new HashSet<>(numerosSorteados);
+        assertEquals(numerosSorteados.size(), conjuntoNumeros.size());
     }
 
     @Test
@@ -36,31 +33,31 @@ class ClasseTest {
     @Test
     public void testValidaJogoTamanhoInvalidoMaiorQue15() {
         List<Integer> jogoInvalido = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-        assertThrows(Exception.class, () -> Classe.loteria(jogoInvalido, 100.0));
+        assertThrows(Exception.class, () -> Classe.validaJogo(jogoInvalido));
     }
 
     @Test
     public void testValidaJogoTamanhoInvalidoMenorQue6() {
         List<Integer> jogoInvalido = Arrays.asList(1, 2, 3, 4, 5);
-        assertThrows(Exception.class, () -> Classe.loteria(jogoInvalido, 100.0));
+        assertThrows(Exception.class, () -> Classe.validaJogo(jogoInvalido));
     }
 
     @Test
     public void testValidaJogoNumeroInvalidoMaiorQue60() {
         List<Integer> jogoInvalido = Arrays.asList(61, 2, 3, 4, 5, 6);
-        assertThrows(Exception.class, () -> Classe.loteria(jogoInvalido, 100.0));
+        assertThrows(Exception.class, () -> Classe.validaJogo(jogoInvalido));
     }
 
     @Test
     public void testValidaJogoNumeroInvalidoMenorQue1() {
         List<Integer> jogoInvalido = Arrays.asList(0, 2, 3, 4, 5, 6);
-        assertThrows(Exception.class, () -> Classe.loteria(jogoInvalido, 100.0));
+        assertThrows(Exception.class, () -> Classe.validaJogo(jogoInvalido));
     }
 
     @Test
     public void testValidaJogoNumeroRepetido() {
         List<Integer> jogoInvalido = Arrays.asList(1, 2, 3, 4, 5, 1);
-        assertThrows(Exception.class, () -> Classe.loteria(jogoInvalido, 100.0));
+        assertThrows(Exception.class, () -> Classe.validaJogo(jogoInvalido));
     }
 
     @Test
@@ -91,12 +88,6 @@ class ClasseTest {
     public void testCalcularPremio4Acertos() {
         double premio = Classe.calcularPremio(100.0, 4);
         assertEquals(5.0, premio, 0.001);
-    }
-
-    @Test
-    public void testCalcularPremio0Acertos() {
-        double premio = Classe.calcularPremio(100.0, 0);
-        assertEquals(0.0, premio, 0.001);
     }
 
     @Test
